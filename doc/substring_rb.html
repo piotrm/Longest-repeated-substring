@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: substring.rb [RDoc Documentation]</title>
+
+	<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+</head>
+
+<body class="file file-popup">
+	<div id="metadata">
+		<dl>
+			<dt class="modified-date">Last Modified</dt>
+			<dd class="modified-date">2011-03-25 20:26:21 +0100</dd>
+
+			
+			<dt class="requires">Requires</dt>
+			<dd class="requires">
+				<ul>
+				
+				</ul>
+			</dd>
+			
+
+			
+		</dl>
+	</div>
+
+	<div id="documentation">
+		
+		<div class="description">
+			<h2>Description</h2>
+			<h2>Longest Repeated <a href="Substring.html">Substring</a></h2>
+<h2>Klasa <a href="Substring.html">Substring</a></h2>
+<p>
+Klasa ta realizuje wyszukiwanie najdłuższego powtarzającego się
+podciągu. Wydaje mi się, że bardziej intuicyjnym rozwiązaniem byłoby
+napisanie rozszerzenia dla klasy String:
+</p>
+<pre>
+       class String
+               def longest_repeated_substring(text)
+                       ...
+               end
+               
+               def extract_substring(text)
+                       ...
+               end
+</pre>
+<p>
+Ale to by było niezgodne z konwencją rozwiązania, a więc niech będzie.
+</p>
+<h2>Uwagi:</h2>
+<ul>
+<li><p>
+Nie byłem do końca pewien czy substring może zawierać spacje. Jeśli
+tak, to odczytywanie wyniku, biorąc pod uwagę zalecany format wyjścia
+(substring&#8217;i podzielone spacjami) może być utrudnione. W każdym
+razie funkcja przewiduje szukanie po całym tekście, włączając w to
+spacje.
+</p>
+</li>
+<li><p>
+Nie wiedziałem, czy mam zachować zasady <b>enkapsulacji</b> czy też nie,
+dlatego będąc leniwym nie stworzyłem akcesorów ani konstruktora. To
+bardzo źle?
+</p>
+</li>
+</ul>
+
+		</div>
+		
+	</div>
+</body>
+</html>
+

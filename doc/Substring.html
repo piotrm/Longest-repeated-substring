@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Substring</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./substring_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="substring.rb">substring.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link">Object</p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-i-extract_substrings">#extract_substrings</a></li>
+					
+					<li><a href="#method-i-longest_repeated_substring">#longest_repeated_substring</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./Substring.html">Substring</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Substring</h1>
+
+		<div id="description">
+			<p>
+Klasa do obsługi podciągów
+</p>
+
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="extract-substrings-method" class="method-detail ">
+				<a name="method-i-extract_substrings"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">extract_substrings</span><span
+						class="method-args">(text)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Metoda realizująca wyszukiwanie konkretnych podciągów na potrzeby
+longest_repeated_substring. Pod pojęciem &#8220;konkretny&#8221; mam na
+myśli taki, który jest co najwyżej tak długi jak połowa długości
+całego tekstu. Branie pod uwagę dłuższych nie ma sensu, bo one nie
+mają prawa się powtórzyć. Tak samo podciągi o długości 1 znaku są
+ignorowane.
+</p>
+<p>
+Nie jestem pewny czy linijka:
+</p>
+<pre>
+      (i+1).upto((s/2)+i&gt; s ? s : (s/2)+i-1) do |j|
+</pre>
+<p>
+nie jest zbyt karkołomna - mógłbym ją ewentualnie rozbić na:
+</p>
+<pre>
+      x = (s/2)+i&gt; s ? s : (s/2)+i-1
+      (i+1).upto(x)
+</pre>
+<p>
+Co więcej, 
+</p>
+<pre>
+      0.upto(s-1) do |i|
+              (i+1).upto(...) do |j| 
+</pre>
+<p>
+wygląda jakby miało dużą złożoność, ale to nie jest O(n^2), bo
+ograniczyłem zakres znaków,  na jakim operuje upto wewnętrzny - jest to
+maksymalnie n/2
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="extract-substrings-source">
+<pre>
+    <span class="ruby-comment cmt"># File substring.rb, line 66</span>
+66:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_substrings</span>(<span class="ruby-identifier">text</span>)
+67:                 <span class="ruby-identifier">substrings</span> = []
+68:                 <span class="ruby-identifier">s</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">size</span>
+69: 
+70:                 <span class="ruby-comment cmt">#i iteruje po wszystkich znakach tekstu (bez ostatniego, bo osiągnięcie ostatniego nie wpływa na wynik)</span>
+71:                 <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">s</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+72:                         <span class="ruby-comment cmt">#j to wartości od i+1 (żeby móc wycinać przedziały tekstu) do (s/2)+i-1 (bez ostatniego elementu) </span>
+73:                         <span class="ruby-comment cmt">#- czyli to przedział równy połowie długości tekstu.</span>
+74:                         <span class="ruby-comment cmt">#W wypadku, gdy i jest większe niż (s/2) czyli (s/2)+i &gt; s to wtedy j wykraczałoby poza zasięg tekstu, </span>
+75:                         <span class="ruby-comment cmt">#dlatego zostaje ustawione na koniec tekstu - s</span>
+76:                         (<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>).<span class="ruby-identifier">upto</span>((<span class="ruby-identifier">s</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>)<span class="ruby-operator">+</span><span class="ruby-identifier">i</span><span class="ruby-operator">&gt;</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">:</span> (<span class="ruby-identifier">s</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>)<span class="ruby-operator">+</span><span class="ruby-identifier">i</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+77:                                 <span class="ruby-comment cmt">#Wycinanie substring'ów z tekstu - stąd też potrzebne są dwie wartości oznaczające indeksy (i, j)</span>
+78:                                 <span class="ruby-identifier">substring</span> = <span class="ruby-identifier">text</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">..</span><span class="ruby-identifier">j</span>]
+79:                                 <span class="ruby-comment cmt">#Do zbioru substringów wpadają tylko te, które są dłuższe od 1</span>
+80:                                 <span class="ruby-identifier">substrings</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">substring</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">substring</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2</span>                                
+81:                                 <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">j</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">s</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+82:                         <span class="ruby-keyword kw">end</span>
+83:                 <span class="ruby-keyword kw">end</span>
+84: 
+85:                 <span class="ruby-identifier">substrings</span>
+86:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="longest-repeated-substring-method" class="method-detail ">
+				<a name="method-i-longest_repeated_substring"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">longest_repeated_substring</span><span
+						class="method-args">(text)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Metoda realizująca wyszukiwanie najdłuższego powtarzającego się
+podciągu
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="longest-repeated-substring-source">
+<pre>
+    <span class="ruby-comment cmt"># File substring.rb, line 27</span>
+27:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">longest_repeated_substring</span>(<span class="ruby-identifier">text</span>)
+28:                 <span class="ruby-identifier">repeated_substring</span> = []
+29:                 <span class="ruby-identifier">result</span> = []
+30: 
+31:                 <span class="ruby-identifier">substrings</span> = <span class="ruby-identifier">extract_substrings</span>(<span class="ruby-identifier">text</span>)
+32:                 
+33:                 <span class="ruby-comment cmt">#wybranie unikalnych podciągów</span>
+34:                 <span class="ruby-identifier">substrings</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span>
+35:                         <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+36:                         <span class="ruby-comment cmt">#liczenie ilości powtórzeń danego podciągu</span>
+37:                         <span class="ruby-identifier">text</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">str</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>}
+38:                         <span class="ruby-identifier">repeated_substring</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">str</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+39:                 <span class="ruby-keyword kw">end</span>
+40:                 
+41:                 <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">repeated_substring</span>.<span class="ruby-identifier">empty?</span>
+42:                         <span class="ruby-comment cmt">#sortowanie wybranych podciągów po długości i alfabetycznie pozwala umiejscowić na końcu listy najdłuższy ciąg powtarzany</span>
+43:                         <span class="ruby-identifier">maximum_length</span> = <span class="ruby-identifier">repeated_substring</span>.<span class="ruby-identifier">sort_by</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">w</span>.<span class="ruby-identifier">length</span>}[<span class="ruby-value">1</span>].<span class="ruby-identifier">length</span>
+44:                         <span class="ruby-comment cmt">#wyszukanie wszystkich powtórzonych ciągów o największej długości</span>
+45:                         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">repeated_substring</span>.<span class="ruby-identifier">find_all</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">elem</span><span class="ruby-operator">|</span> <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">maximum_length</span>}
+46:                 <span class="ruby-keyword kw">end</span>
+47:                 
+48:                 <span class="ruby-identifier">result</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; &quot;</span>)
+49:         <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
